@@ -18,10 +18,12 @@ class DataLoaderBase(object):
 
         self.data_dir = os.path.join(args.data_dir, args.data_name)
         self.train_file = os.path.join(self.data_dir, 'train.txt')
+        self.validation_file = os.path.join(self.data_dir, 'validation.txt')
         self.test_file = os.path.join(self.data_dir, 'test.txt')
         self.kg_file = os.path.join(self.data_dir, "kg_final.txt")
 
         self.cf_train_data, self.train_user_dict = self.load_cf(self.train_file)
+        self.cf_validation_data, self.validation_user_dict = self.load_cf(self.validation_file)
         self.cf_test_data, self.test_user_dict = self.load_cf(self.test_file)
         self.statistic_cf()
 
@@ -54,9 +56,10 @@ class DataLoaderBase(object):
 
 
     def statistic_cf(self):
-        self.n_users = max(max(self.cf_train_data[0]), max(self.cf_test_data[0])) + 1
-        self.n_items = max(max(self.cf_train_data[1]), max(self.cf_test_data[1])) + 1
+        self.n_users = max(max(self.cf_train_data[0]), max(self.cf_validation_data[0]), max(self.cf_test_data[0])) + 1
+        self.n_items = max(max(self.cf_train_data[1]), max(self.cf_validation_data[1]), max(self.cf_test_data[1])) + 1
         self.n_cf_train = len(self.cf_train_data[0])
+        self.n_cf_validation = len(self.cf_validation_data[0])
         self.n_cf_test = len(self.cf_test_data[0])
 
 

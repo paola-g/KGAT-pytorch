@@ -42,9 +42,11 @@ class DataLoaderKGAT(DataLoaderBase):
         self.n_users_entities = self.n_users + self.n_entities
 
         self.cf_train_data = (np.array(list(map(lambda d: d + self.n_entities, self.cf_train_data[0]))).astype(np.int32), self.cf_train_data[1].astype(np.int32))
+        self.cf_validation_data = (np.array(list(map(lambda d: d + self.n_entities, self.cf_validation_data[0]))).astype(np.int32), self.cf_validation_data[1].astype(np.int32))
         self.cf_test_data = (np.array(list(map(lambda d: d + self.n_entities, self.cf_test_data[0]))).astype(np.int32), self.cf_test_data[1].astype(np.int32))
 
         self.train_user_dict = {k + self.n_entities: np.unique(v).astype(np.int32) for k, v in self.train_user_dict.items()}
+        self.validation_user_dict = {k + self.n_entities: np.unique(v).astype(np.int32) for k, v in self.validation_user_dict.items()}
         self.test_user_dict = {k + self.n_entities: np.unique(v).astype(np.int32) for k, v in self.test_user_dict.items()}
 
         # add interactions to kg data
@@ -149,6 +151,7 @@ class DataLoaderKGAT(DataLoaderBase):
         logging.info('n_r_list:          %d' % len(self.r_list))
 
         logging.info('n_cf_train:        %d' % self.n_cf_train)
+        logging.info('n_cf_validation:   %d' % self.n_cf_validation)
         logging.info('n_cf_test:         %d' % self.n_cf_test)
 
         logging.info('n_kg_train:        %d' % self.n_kg_train)
