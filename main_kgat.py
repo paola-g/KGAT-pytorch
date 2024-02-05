@@ -35,7 +35,7 @@ def evaluate(model, dataloader, Ks, device, test=False):
     item_ids = torch.arange(n_items, dtype=torch.long).to(device)
 
     cf_scores = []
-    metric_names = ['precision', 'recall', 'ndcg']
+    metric_names = ['precision', 'recall', 'ndcg', 'f1']
     metrics_dict = {k: {m: [] for m in metric_names} for k in Ks}
 
     with tqdm(total=len(user_ids_batches), desc='Evaluating Iteration') as pbar:
@@ -233,8 +233,8 @@ def predict(args):
 
     cf_scores, metrics_dict = evaluate(model, data, Ks, device, test=True)
     np.save(args.save_dir + 'cf_scores.npy', cf_scores)
-    print('CF Evaluation: Precision [{:.4f}, {:.4f}], Recall [{:.4f}, {:.4f}], NDCG [{:.4f}, {:.4f}]'.format(
-        metrics_dict[k_min]['precision'], metrics_dict[k_max]['precision'], metrics_dict[k_min]['recall'], metrics_dict[k_max]['recall'], metrics_dict[k_min]['ndcg'], metrics_dict[k_max]['ndcg']))
+    print('CF Evaluation: Precision [{:.4f}, {:.4f}], Recall [{:.4f}, {:.4f}], F1 [{:.4f}, {:.4f}], NDCG [{:.4f}, {:.4f}]'.format(
+        metrics_dict[k_min]['precision'], metrics_dict[k_max]['precision'], metrics_dict[k_min]['recall'], metrics_dict[k_max]['recall'], metrics_dict[k_min]['f1'], metrics_dict[k_max]['f1'], metrics_dict[k_min]['ndcg'], metrics_dict[k_max]['ndcg']))
 
 
 

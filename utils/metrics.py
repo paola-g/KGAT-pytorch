@@ -143,6 +143,7 @@ def calc_metrics_at_k(cf_scores, train_user_dict, test_user_dict, user_ids, item
         metrics_dict[k]['precision'] = precision_at_k_batch(binary_hit, k)
         metrics_dict[k]['recall']    = recall_at_k_batch(binary_hit, k)
         metrics_dict[k]['ndcg']      = ndcg_at_k_batch(binary_hit, k)
+        metrics_dict[k]['f1'] = F1(metrics_dict[k]['precision'], metrics_dict[k]['recall'])
     return metrics_dict
 
 

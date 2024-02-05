@@ -264,7 +264,8 @@ def predict(args):
 
 if __name__ == '__main__':
     try:
-        mp.set_start_method('spawn')
+        #mp.set_start_method('spawn')
+        mp.set_start_method('fork')
     except RuntimeError:
         pass
 

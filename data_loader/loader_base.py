@@ -106,10 +106,17 @@ class DataLoaderBase(object):
         else:
             batch_user = [random.choice(exist_users) for _ in range(batch_size)]
 
+
+        """
         batch_pos_item, batch_neg_item = [], []
         for u in batch_user:
             batch_pos_item += self.sample_pos_items_for_u(user_dict, u, 1)
             batch_neg_item += self.sample_neg_items_for_u(user_dict, u, 1)
+        """
+        # PG edit: we only have one user
+        batch_user = exist_users
+        batch_pos_item = self.sample_pos_items_for_u(user_dict, exist_users[0], batch_size)
+        batch_neg_item = self.sample_neg_items_for_u(user_dict, exist_users[0], batch_size)
 
         batch_user = torch.LongTensor(batch_user)
         batch_pos_item = torch.LongTensor(batch_pos_item)
